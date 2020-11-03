@@ -1,9 +1,20 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-
+import { MongooseModule } from '@nestjs/mongoose';
+import { NoteModule } from './modules/note.module';
+require('dotenv').config()
 @Module({
-  imports: [],
+  imports: [
+    MongooseModule.forRoot(process.env.DATABASE_URI,
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true,
+        useFindAndModify: false
+      }),
+    NoteModule
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
